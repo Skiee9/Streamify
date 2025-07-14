@@ -106,7 +106,45 @@ if(!friendRequest){
 if(friendRequest.recipient.toString()!== req.user.id){
     return res.status(403).json({message:"you are not authorized to accept this request"})
 }
+  friendRequest.status="accepted";
+  await friendRequest.save();
+
+
+  //add each user to other;s friends array
+  await User.findByIdAndUpdate(friendRequest.sender,{
+    $addToSet:{friends:friendRequest.recipient},
+  });
+
+  await User.frindByIdAndUpdate(friendRequest.recipient,{
+    $addToSet:{friends:friendRequest.sender},
+  })
+
+
+  res.status(200).json({message:"friend request accepted"})
+
     }catch(error){
+        console.log("Error in acceptFriendRequest controller", error.message);
+        res.status(500).json({message:"Internal Server Error"})
+
+    }
+}
+
+export async function getFriendRequests(req, res){
+    try{
+        const incomingReqs= await FriendRequest.find({
+            recipient: req.user.id,
+            status: "pending"
+        }).populate("sender", "fullName profilePic nativeLanguage learningLanguage");
+
+        const acceptedReqs= await FriendRequest.find({
+            sender: req.user.id,
+            status:"accepted",}).populate("recipient", "fullName profilePic nativeLanguage learningLanguage");
+
+            res.status(200).json({ incomingReqs, acceptedReqs });
+    }catch(error){
+
+ console.log("Error in getPendingFriendRequests controller", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
 
     }
 }
