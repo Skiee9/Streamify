@@ -81,10 +81,32 @@ export async function sendFriendRequest(req, res) {
         sender: myId,
         recipient: recipientId
     });
+
+    res.status(201).json(friendRequest);
     }
     
     catch(error){
+        console.error("Error in sendFriendRequest controller", error);
+        res.status(500).json({message:"Internal Server Error"})
 
     }
     
+}
+
+export async function acceptFriendRequest(req, res){
+    try{
+const { id:requestId } = req.params
+const friendRequest= await FriendRequest.frindById(requestId);
+
+if(!friendRequest){
+    return res.status(404).json({message:"Friend request not found"})
+}
+
+//verify the current user is the recipient
+if(friendRequest.recipient.toString()!== req.user.id){
+    return res.status(403).json({message:"you are not authorized to accept this request"})
+}
+    }catch(error){
+
+    }
 }
