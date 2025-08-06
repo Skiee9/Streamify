@@ -7,12 +7,12 @@ import NotificationsPage from './pages/NotificationsPage'
 import SignUpPage from './pages/SignUpPage'
 import OnboardingPage from './pages/OnboardingPage'
 import LoginPage from './pages/LoginPage'
-import toast, { Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
   return (
-    <div className='bg-red-500 h-screen' data-theme="coffee">
-  <button onClick={()=> toast.success('Hello lady!')}>Click me</button>
+    <div className='bg-red-500 ' data-theme="coffee">
+
 <Routes>
 <Route path="/" element={<HomePage/>} />
 <Route path="/login" element={<LoginPage/>}/>
@@ -24,6 +24,11 @@ const App = () => {
 
 </Routes>
 
+
+
+
+
+ {/* for toast notifications */}
 <Toaster/>
     </div>
   )
