@@ -8,10 +8,22 @@ import SignUpPage from './pages/SignUpPage'
 import OnboardingPage from './pages/OnboardingPage'
 import LoginPage from './pages/LoginPage'
 import { Toaster } from 'react-hot-toast'
+import { useQuery } from '@tanstack/react-query'
+import { axiosInstance } from './lib/axios.js' 
 
 const App = () => {
-  return (
-    <div className='bg-red-500 ' data-theme="coffee">
+  //tanstack query
+const {data}= useQuery
+
+ 
+
+
+
+
+
+
+return (
+    <div className='h-screen ' data-theme="coffee">
 
 <Routes>
 <Route path="/" element={<HomePage/>} />
