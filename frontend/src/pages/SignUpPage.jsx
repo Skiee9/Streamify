@@ -3,6 +3,7 @@ import { ShipWheelIcon } from "lucide-react";
 import { Link } from "react-router";
 import { signup } from "../lib/api";
 import useSignUp from "../hooks/useSignUp";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const SignUpPage = () => {
   const [signupData, setSignupData] = useState({
@@ -11,7 +12,7 @@ const SignUpPage = () => {
     password: "",
   });
 
- 
+
   const { isPending, error, signupMutation } = useSignUp();
 
   const handleSignup = (e) => {
