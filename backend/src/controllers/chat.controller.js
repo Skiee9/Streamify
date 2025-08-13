@@ -1,9 +1,12 @@
-import express from "express";
-import { protectRoute } from "../middleware/auth.middleware.js";
-import { getStreamToken } from "../controllers/chat.controller.js";
+import { generateStreamToken } from "../lib/stream.js";
 
-const router = express.Router();
+export async function getStreamToken(req, res) {
+  try {
+    const token = generateStreamToken(req.user.id);
 
-router.get("/token", protectRoute, getStreamToken);
-
-export default router;
+    res.status(200).json({ token });
+  } catch (error) {
+    console.log("Error in getStreamToken controller:", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
