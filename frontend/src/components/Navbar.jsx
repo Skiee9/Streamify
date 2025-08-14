@@ -41,7 +41,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* TODO */}
+       
           <ThemeSelector />
 
           <div className="avatar">
