@@ -23,10 +23,21 @@ const HomePage = () => {
     queryFn: getUserFriends,
   });
 
-  const { data: recommendedUsers = [], isLoading: loadingUsers } = useQuery({
-    queryKey: ["users"],
-    queryFn: getRecommendedUsers,
-  });
+  // const { data: recommendedUsers = [], isLoading: loadingUsers } = useQuery({
+  //   queryKey: ["users"],
+  //   queryFn: getRecommendedUsers,
+  // });
+  const { data: usersData, isLoading: loadingUsers } = useQuery({
+  queryKey: ["users"],
+  queryFn: getRecommendedUsers,
+});
+
+const recommendedUsers = Array.isArray(usersData)
+  ? usersData
+  : usersData?.recommendedUsers || [];
+
+console.log("API result:", recommendedUsers);
+
 
   const { data: outgoingFriendReqs } = useQuery({
     queryKey: ["outgoingFriendReqs"],

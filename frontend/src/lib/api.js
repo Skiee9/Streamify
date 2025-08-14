@@ -39,10 +39,26 @@ export async function getRecommendedUsers() {
   return response.data;
 }
 
+
 export async function getOutgoingFriendReqs() {
   const response = await axiosInstance.get("/users/outgoing-friend-requests");
-  return response.data;
+  return response.data.recommendedUsers || [] ;
 }
+
+// export async function getRecommendedUsers() {
+//   const response = await axiosInstance.get("/users");
+//   console.log("Backend /users response:", response.data);
+//   console.log("Type of recommendedUsers:", Array.isArray(response.data.recommendedUsers));
+  
+//   // Ensure it's always an array
+//   if (Array.isArray(response.data)) {
+//     return response.data; // backend returns array directly
+//   }
+//   if (Array.isArray(response.data.recommendedUsers)) {
+//     return response.data.recommendedUsers;
+//   }
+//   return []; // default fallback
+// }
 
 export async function sendFriendRequest(userId) {
   const response = await axiosInstance.post(`/users/friend-request/${userId}`);
